@@ -1,3 +1,7 @@
+#PRACTICA 02
+#ALUMNO: Gamaliel Jabneel Perez Esquivel 19180927
+#MATERIA: Inteligencia artificial
+#DOCENTE: Stephanie Cordero Martínez
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -67,39 +71,39 @@ class Perceptron(object):
 #############################################################################
 ## MUESTRA LOS DATOS DE ENTRENAMIENTO CON PERCEPTRON ##
 print(50 * '=')
-print('Section: Training a perceptron model on the Iris dataset')
+print('Sección: Entrenamiento de un modelo perceptrón en el conjunto de datos Rice')
 print(50 * '-')
 ## AQUÍ VAN A TOMAR SUS DATOS DEL PROGRAMA ANTERIOR ##
-df = pd.read_csv('Practicas/Nueva carpeta/Rice2.csv', header=None)
+df = pd.read_csv('Practicas/Nueva carpeta/Rice.csv', header=None)
 print(df.tail())
 
 #############################################################################
 print(50 * '=')
-print('Plotting the Iris data')
+print('Trazado de los datos de Rice')
 print(50 * '-')
 
 # select setosa and versicolor
-y = df.iloc[0:100, 4].values
-y = np.where(y == 'Iris-setosa', -1, 1)
+y = df.iloc[0:20, 4].values
+y = np.where(y == 'Rice', -1, 1)
 
 # extract sepal length and petal length
-X = df.iloc[0:100, [0, 2]].values
+X = df.iloc[0:20, [0, 2]].values
 
 # plot data   --- CLASIFICA POR COLORES
-plt.scatter(X[:50, 0], X[:50, 1],
-            color='red', marker='o', label='setosa')
-plt.scatter(X[50:100, 0], X[50:100, 1],
-            color='blue', marker='x', label='versicolor')
+plt.scatter(X[:5, 0], X[:5, 1],
+            color='#00BFBF', marker='o', label='Cammeo')
+plt.scatter(X[5:10, 0], X[5:10, 1],
+            color='#8A2BE2', marker='x', label='Osmancik')
 
-plt.xlabel('sepal length [cm]')
-plt.ylabel('petal length [cm]')
+plt.xlabel('Area - Logintud del eje mayor')
+plt.ylabel('Perimetro - Longitud del eje menor')
 plt.legend(loc='upper left')
 
 plt.show()
 
 #############################################################################
 print(50 * '=')
-print('Training the perceptron model')
+print('Entrenamiento del modelo perceptrón')
 print(50 * '-')
 
 ppn = Perceptron(eta=0.1, n_iter=10)
@@ -107,15 +111,15 @@ ppn = Perceptron(eta=0.1, n_iter=10)
 ppn.fit(X, y)
 
 plt.plot(range(1, len(ppn.errors_) + 1), ppn.errors_, marker='o')
-plt.xlabel('Epochs')
-plt.ylabel('Number of misclassifications')
+plt.xlabel('Épocas')
+plt.ylabel('Número de clasificaciones erróneas')
 
 
 plt.show()
 
 #############################################################################
 print(50 * '=')
-print('A function for plotting decision regions')
+print('Una función para trazar regiones de decisión')
 print(50 * '-')
 
 
@@ -144,8 +148,8 @@ def plot_decision_regions(X, y, classifier, resolution=0.02):
 
 
 plot_decision_regions(X, y, classifier=ppn)
-plt.xlabel('sepal length [cm]')
-plt.ylabel('petal length [cm]')
+plt.xlabel('Area - Logintud del eje mayor')
+plt.ylabel('Perimetro - Longitud del eje menor')
 plt.legend(loc='upper left')
 
 plt.show()
@@ -154,7 +158,7 @@ plt.show()
 #############################################################################
 ## IMPLEMENTACIÓN DE ADAPTIVE ##
 print(50 * '=')
-print('Implementing an adaptive linear neuron in Python')
+print('Implementación de una neurona lineal adaptativa en Python')
 print(50 * '-')
 
 
@@ -225,13 +229,13 @@ fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(8, 4))
 
 ada1 = AdalineGD(n_iter=10, eta=0.01).fit(X, y)
 ax[0].plot(range(1, len(ada1.cost_) + 1), np.log10(ada1.cost_), marker='o')
-ax[0].set_xlabel('Epochs')
+ax[0].set_xlabel('Épocas')
 ax[0].set_ylabel('log(Sum-squared-error)')
 ax[0].set_title('Adaline - Learning rate 0.01')
 
 ada2 = AdalineGD(n_iter=10, eta=0.0001).fit(X, y)
 ax[1].plot(range(1, len(ada2.cost_) + 1), ada2.cost_, marker='o')
-ax[1].set_xlabel('Epochs')
+ax[1].set_xlabel('Épocas')
 ax[1].set_ylabel('Sum-squared-error')
 ax[1].set_title('Adaline - Learning rate 0.0001')
 
@@ -240,7 +244,7 @@ ax[1].set_title('Adaline - Learning rate 0.0001')
 plt.show()
 
 
-print('standardize features')
+print('estandarizar características')
 X_std = np.copy(X)
 X_std[:, 0] = (X[:, 0] - X[:, 0].mean()) / X[:, 0].std()
 X_std[:, 1] = (X[:, 1] - X[:, 1].mean()) / X[:, 1].std()
@@ -250,14 +254,14 @@ ada.fit(X_std, y)
 
 plot_decision_regions(X_std, y, classifier=ada)
 plt.title('Adaline - Gradient Descent')
-plt.xlabel('sepal length [standardized]')
-plt.ylabel('petal length [standardized]')
+plt.xlabel('Area - Logintud del eje mayor [standardized]')
+plt.ylabel('Perimetro - Longitud del eje menor [standardized]')
 plt.legend(loc='upper left')
 
 plt.show()
 
 plt.plot(range(1, len(ada.cost_) + 1), ada.cost_, marker='o')
-plt.xlabel('Epochs')
+plt.xlabel('Épocas')
 plt.ylabel('Sum-squared-error')
 
 
@@ -266,7 +270,7 @@ plt.show()
 
 #############################################################################
 print(50 * '=')
-print('Large scale machine learning and stochastic gradient descent')
+print('Aprendizaje automático a gran escala y descenso por gradiente estocástico')
 print(50 * '-')
 
 
@@ -376,17 +380,17 @@ ada = AdalineSGD(n_iter=15, eta=0.01, random_state=1)
 ada.fit(X_std, y)
 
 plot_decision_regions(X_std, y, classifier=ada)
-plt.title('Adaline - Stochastic Gradient Descent')
-plt.xlabel('sepal length [standardized]')
-plt.ylabel('petal length [standardized]')
+plt.title('Adaline - Descenso Gradiente Estocástico')
+plt.xlabel('Area - Logintud del eje mayor [standardized]')
+plt.ylabel('Perimetro - Longitud del eje menor [standardized]')
 plt.legend(loc='upper left')
 
 
 plt.show()
 
 plt.plot(range(1, len(ada.cost_) + 1), ada.cost_, marker='o')
-plt.xlabel('Epochs')
-plt.ylabel('Average Cost')
+plt.xlabel('Épocas')
+plt.ylabel('Costo promedio')
 
 
 plt.show()
